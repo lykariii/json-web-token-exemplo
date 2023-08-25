@@ -28,19 +28,6 @@ app.use(
   }).unless({ path: ["/autenticar", "/logar", "/deslogar", "/usuarios/cadastrar"] })
 );
 
-app.get('/usuarios/cadastrar', async function(req, res){
-  res.render('usuarios/cadastrar');
-})
-
-app.post('/usuarios/cadastrar', async function(req, res){
-  if(req.body.senha === req.body.senha2)
-  res.json({mensagem: "Cadastro realizado!"})
-else(
-  res.json({mensagem: "Senhas não são iguais!"})
- )
-
-})
-
 app.get('/autenticar', async function(req, res){
   res.render('autenticar');
 })
@@ -49,48 +36,51 @@ app.get('/', async function(req, res){
   res.render("home")
 })
 
-app.post('/logar', (req, res) => {
-  if(req.body.usuario == "kari" && req.body.senha == "123"){
-    const id = 1;
-
-    const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 300
-    })
-
-    res.cookie('token', token, {httpOnly: true});
-    return res.json({
-      usuario: req.body.usuario,
-      token: token
-    })
-  } 
-
-  res.status(500).json({ mensagem: "Login Inválido "})
+app.get('/usuarios/cadastrar', async function(req, res){
+  res.render('usuarios/cadastrar')
 })
-
-app.post('/deslogar', function(req, res) {
-  res.cookie('token', null, {httpOnly: true});
-  res.json({
-    deslogado:true
-  })
-
-
-})
-
 
 
 app.post('/usuarios/cadastrar', async function(req, res){
   try {
-    if(req.body.senha === req.body.senha2)
+    if(req.body.senha == req.body.senha2){
       await usuario.create(req.body);
       res.redirect('/usuarios/listar')
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Ocorreu um erro ao criar o usuário.' });
-  }
+    }
+} catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'As senhas não são iguais!✧' });
+}
 })
 
 app.get('/usuarios/listar', async function(req, res){
-  res.json('usuarios')
+ try {
+  var usuarios = await usuario.findAll();
+  res.render('home', { usuarios });
+} catch (err) {
+  console.error(err);
+  res.status(500).json({ message: 'Ocorreu um erro ao buscar os usuário.' });
+}
+})
+
+app.post('/logar', (req, res) => {
+  if(req.body.usuario == 'kari' && req.body.senha == '123') {
+    const id = 1;
+    const token = jwt.sign({ id }, process.env.SECRET, {
+      expiresIn: 300
+    })
+    res.cookie('token', token, {httpOnly:true});
+    return res.json({
+      usuario: req.body.usuario,
+      token: token
+    })
+  }
+    res.status(500).json({mensagem: "Login inválido!(˶˃ᆺ˂˶)"})
+})
+
+app.post('/deslogar', function(req, res) {
+  res.cookie('token', null, {httpOnly:true});
+  res.json({deslogar:true})
 })
 
 app.listen(3000, function() {
