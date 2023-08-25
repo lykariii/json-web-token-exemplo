@@ -5,20 +5,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
-  <title>Cadastrar</title>
+  <title>Cadastro</title>
 </head>
 <body>
-  <div class="login-page">
-    <div class="form">
-      <form method="post" action="/usuarios/cadastrar" class="login-form">
-        <h1>Cadastro</h1>
-        <input type="text" name="usuario" placeholder="Digite seu E-mail"/>
-        <input type="password" name="senha" placeholder="Digite uma senha"/>
-        <input type="password" name="senhadois" placeholder="Confirme sua senha"/>
-        <input type="submit" value="Cadastrar" class="botao" action="/usuarios/cadastrar"/>
-        <p class="message">Ja é registrado? <a href="#">Faça seu login!</a></p>
-      </form>
-    </div>
+  <div class="login-box">
+    <h2>Cadastrar</h2>
+    <form action="/usuarios/cadastrar" method="post">
+      <div class="user-box">
+        <input type="text" name="usuario" required="">
+        <label>Usuario:</label></div>
+      <div class="user-box">
+        <input type="password" name="senha" required="">
+        <label>Senha:</label></div>
+        <div class="user-box">
+        <input type="password" name="senha2" required="">
+        <label>Digite a senha novamente:</label></div>
+        <input class="a" type="submit" value="cadastrar" action="/usuarios/cadastrar">
+
+    </form>
   </div>
 </body>
 </html>

@@ -30,11 +30,10 @@ app.use(
 
 app.get('/usuarios/cadastrar', async function(req, res){
   res.render('usuarios/cadastrar');
-  
 })
 
 app.post('/usuarios/cadastrar', async function(req, res){
-  if(req.body.senha === req.body.senhadois)
+  if(req.body.senha === req.body.senha2)
   res.json({mensagem: "Cadastro realizado!"})
 else(
   res.json({mensagem: "Senhas não são iguais!"})
@@ -81,7 +80,7 @@ app.post('/deslogar', function(req, res) {
 
 app.post('/usuarios/cadastrar', async function(req, res){
   try {
-    if(req.body.senha === req.body.senhadois)
+    if(req.body.senha === req.body.senha2)
       await usuario.create(req.body);
       res.redirect('/usuarios/listar')
   } catch (err) {
