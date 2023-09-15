@@ -8,8 +8,8 @@
 </head>
 <body>
   <% criado.forEach((usuario) => { %>
-    <%= usuario.nome %>
-    <%= usuario.senha %>
+    <h1><%= usuario.nome %></h1> <br/>
+    <%= usuario.senha %><br/>
   <% }) %>
   <form action="/deslogar" method="post">
     <input type="submit" value="Deslogar">
