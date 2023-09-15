@@ -19,6 +19,7 @@ body {
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0,0,0,.6);
   border-radius: 10px;
+  color: #fff;
 }
 
 .login-box h2 {
@@ -164,5 +165,6 @@ body {
 }
 
 input{
-  background-color: rgb(255, 255, 255);
+  background: none;
+  color: #fff;
 }
