@@ -82,12 +82,12 @@ app.post('/logar', async function(req, res) {
       token: token
     })
   }
-    res.status(500).json({mensagem: "Login inválido!(˶˃ᆺ˂˶)"})
+    res.status(500).json({mensagem: "erro no login"})
 })
 
 app.post('/deslogar', function(req, res) {
   res.cookie('token', null, {httpOnly:true});
-  res.json({deslogar:true})
+  res.redirect('/autenticar')
 })
 
 app.listen(3000, function() {
