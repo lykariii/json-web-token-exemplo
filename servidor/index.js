@@ -68,19 +68,21 @@ app.get('/usuarios/listar', async function(req, res){
 }
 })
 
-app.post('/logar', (req, res) => {
-  if(req.body.usuario == 'kari' && req.body.senha == '123') {
-    const id = 1;
+app.post('/logar', async function(req, res) {
+  const registro = await usuario.findOne({ where: { nome: req.body.nome, senha: crypto.encrypt(req.body.senha) } })
+  if(registro){
+    const id = registro.id;
     const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 300
+      expiresIn: 3000
     })
     res.cookie('token', token, {httpOnly:true});
     return res.json({
-      usuario: req.body.usuario,
+      nome: req.body.nome,
+      senha: crypto.encrypt(req.body.senha),
       token: token
     })
   }
-    res.status(500).json({mensagem: "Login inválido!"})
+    res.status(500).json({mensagem: "Login inválido!(˶˃ᆺ˂˶)"})
 })
 
 app.post('/deslogar', function(req, res) {
@@ -91,5 +93,3 @@ app.post('/deslogar', function(req, res) {
 app.listen(3000, function() {
   console.log('App de Exemplo escutando na porta 3000!')
 });
-
-
