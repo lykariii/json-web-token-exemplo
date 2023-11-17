@@ -1,0 +1,78 @@
+'use client'
+
+import './page.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { postUser } from '@/app/functions/handlerAcessAPI';
+import { ToastContainer, toast } from 'react-toastify';
+import Menu from '@/app/componentes/Menu';
+
+export default function Register() {
+  const [registro, setRegistro] = useState({
+    name: '', email: '', password: ''
+  });
+
+  const { push, refresh } = useRouter();
+
+  const handlerFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await postUser(registro);
+      push('/pages/dashboard');
+    } catch {
+      return toast.error('Error');
+  }
+
+  const success = true;
+   if (success) {
+      toast.success('Usuário cadastrado com sucesso!');
+    } else {
+      toast.error('Ocorreu um erro ao cadastrar o usuário.');
+    }
+  };
+  return (
+    <div>
+      <Menu />
+      <h1>Register</h1>
+      <div className="container">
+        <div className="card">
+          <form onSubmit={handlerFormSubmit}>
+            <input
+              id="nome"
+              className="input"
+              type="text"
+              placeholder="Name"
+              onChange={(e) => {
+                setRegistro({ ...registro, name: e.target.value });
+              }}
+            />
+            <br />
+            <input
+              id="email"
+              className="input"
+              type="email"
+              placeholder="E-mail"
+              onChange={(e) => {
+                setRegistro({ ...registro, email: e.target.value });
+              }}
+            />
+            <br />
+            <input
+              id="password"
+              className="input"
+              type="password"
+              placeholder="Password"
+              onChange={(e) => {
+                setRegistro({ ...registro, password: e.target.value });
+              }}
+            />
+            <br />
+            <button>Register</button>
+          </form>
+        </div>
+      </div>
+      <ToastContainer />
+    </div>
+  );
+}

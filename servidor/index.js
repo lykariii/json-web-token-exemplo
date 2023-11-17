@@ -3,6 +3,15 @@ require("dotenv-safe").config();
 const jwt = require('jsonwebtoken');
 var { expressjwt: expressJWT } = require("express-jwt");
 const cors = require('cors');
+
+const corsSelect = {
+  origin: "http://localhost:3000",
+  method: "GET,PUT,POST,DELETE",
+
+  allowedHeaders: "Content-Type,Authorization",
+  credentials: true
+}
+
 const crypto = require('./crypto');
 
 var cookieParser = require('cookie-parser')
@@ -11,10 +20,9 @@ const express = require('express');
 const { usuario } = require('./models');
 
 const app = express();
+app.use(cors(corsSelect))
 
 app.set('view engine', 'ejs');
-
-app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
@@ -61,7 +69,7 @@ app.post('/usuarios/cadastrar', async function(req, res){
 app.get('/usuarios/listar', async function(req, res){
  try {
   var criado = await usuario.findAll();
-  res.render('home', { criado });
+  res.json(criado);
 } catch (err) {
   console.error(err);
   res.status(500).json({ message: 'Ocorreu um erro ao buscar os usuário.' });
@@ -75,12 +83,16 @@ app.post('/logar', async function(req, res) {
     const token = jwt.sign({ id }, process.env.SECRET, {
       expiresIn: 3000
     })
-    res.cookie('token', token, {httpOnly:true});
-    return res.json({
-      nome: req.body.nome,
-      senha: crypto.encrypt(req.body.senha),
+    res.cookie('token', token, {httpOnly:true}).json({
+      nome: registro.nome,
       token: token
-    })
+    });
+    
+    //return res.json({
+     // nome: req.body.nome,
+     // senha: crypto.encrypt(req.body.senha),
+     // token: token
+   // })
   }
     res.status(500).json({mensagem: "erro no login"})
 })
