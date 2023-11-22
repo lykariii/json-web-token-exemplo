@@ -1,6 +1,6 @@
 import './Menu.css'
 
-export default async function Menu() {
+export default function Menu() {
     return(
         <div class="wrapper">
     <div class="sidebar">
