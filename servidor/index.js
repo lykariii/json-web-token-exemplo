@@ -87,14 +87,9 @@ app.post('/logar', async function(req, res) {
       nome: registro.nome,
       token: token
     });
-    
-    //return res.json({
-     // nome: req.body.nome,
-     // senha: crypto.encrypt(req.body.senha),
-     // token: token
-   // })
+    //return res.json(registro)
   }
-    res.status(500).json({mensagem: "erro no login"})
+    //res.status(500).json({mensagem: "erro no login"})
 })
 
 app.post('/deslogar', function(req, res) {

@@ -9,7 +9,7 @@ import './page.css'
 
 export default function Register() {
   const [registro, setRegistro] = useState({
-    name: '', email: '', password: ''
+    nome: '', senha: ''
   });
 
   const { push, refresh } = useRouter();
@@ -38,11 +38,9 @@ export default function Register() {
   <div className='card'>
   <form onSubmit={handlerFormSubmit}>
   <input
-      placeholder='Name' type="name" onChange={(e) => { setRegistro({ ...registro, name: e.target.value }) }}/><br/>
+      placeholder='Name' type="text" name="nome" onChange={(e) => { setRegistro({ ...registro, nome: e.target.value }) }}/><br/>
     <input
-      placeholder='E-mail' type="email" onChange={(e) => { setRegistro({ ...registro, email: e.target.value }) }}/><br/>
-    <input
-      placeholder='Password' type='password' onChange={(e) => { setRegistro({ ...registro, password: e.target.value }) }}/><br/>
+      placeholder='Password' type='password' name="senha" onChange={(e) => { setRegistro({ ...registro, senha: e.target.value }) }}/><br/>
     <button>Register</button>
   </form>
   </div></div>
