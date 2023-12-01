@@ -77,13 +77,15 @@ app.get('/usuarios/listar', async function(req, res){
 })
 
 app.post('/logar', async function(req, res) {
+  console.log(req.body.nome)
   const registro = await usuario.findOne({ where: { nome: req.body.nome, senha: crypto.encrypt(req.body.senha) } })
   if(registro){
     const id = registro.id;
     const token = jwt.sign({ id }, process.env.SECRET, {
       expiresIn: 3000
     })
-    res.cookie('token', token, {httpOnly:true}).json({
+
+     return res.cookie('token', token, {httpOnly:true}).json({
       nome: registro.nome,
       token: token
     });
@@ -97,6 +99,6 @@ app.post('/deslogar', function(req, res) {
   res.redirect('/autenticar')
 })
 
-app.listen(3000, function() {
+app.listen(4000, function() {
   console.log('App de Exemplo escutando na porta 3000!')
 });

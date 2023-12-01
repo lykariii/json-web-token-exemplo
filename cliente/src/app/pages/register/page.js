@@ -9,7 +9,7 @@ import './page.css'
 
 export default function Register() {
   const [registro, setRegistro] = useState({
-    nome: '', senha: ''
+    nome: '', senha: '', senha2: ''
   });
 
   const { push, refresh } = useRouter();
@@ -41,6 +41,8 @@ export default function Register() {
       placeholder='Name' type="text" name="nome" onChange={(e) => { setRegistro({ ...registro, nome: e.target.value }) }}/><br/>
     <input
       placeholder='Password' type='password' name="senha" onChange={(e) => { setRegistro({ ...registro, senha: e.target.value }) }}/><br/>
+      <input
+      placeholder='Password' type='password' name="senha2" onChange={(e) => { setRegistro({ ...registro, senha2: e.target.value }) }}/><br/>
     <button>Register</button>
   </form>
   </div></div>
